@@ -49,7 +49,7 @@ const Hero = () => {
             size="lg"
             className="bg-transparent hover:bg-background hover:text-foreground text-white border-2 border-white rounded-full transform hover:scale-105 transition-all"
           >
-            <a href="/contato">
+            <a href="/reservas">
               Faça sua Reserva
             </a>
           </Button>

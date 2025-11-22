@@ -3,11 +3,11 @@ import { Input } from "@/components/ui/input";
 
 const Footer = () => {
   const quickLinks = [
-    { href: "#home", label: "Início" },
-    { href: "#about", label: "Sobre" },
-    { href: "#rooms", label: "Acomodações" },
-    { href: "#gallery", label: "Galeria" },
-    { href: "#contact", label: "Contato" },
+    { href: "/", label: "Início" },
+    { href: "/#about", label: "Sobre" },
+    { href: "/acomodacoes", label: "Acomodações" },
+    { href: "/galeria", label: "Galeria" },
+    { href: "/contato", label: "Contato" },
   ];
 
   return (

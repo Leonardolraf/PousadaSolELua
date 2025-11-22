@@ -22,7 +22,7 @@ const Parallax = () => {
           size="lg"
           className="bg-primary hover:bg-golden-dark text-primary-foreground font-bold rounded-full transform hover:scale-105 transition-all shadow-golden"
         >
-          <a href="#contact">Reserve Agora</a>
+          <a href="/reservas">Reserve Agora</a>
         </Button>
       </div>
     </section>

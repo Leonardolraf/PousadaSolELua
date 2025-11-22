@@ -78,7 +78,7 @@ const About = () => {
             </div>
 
             <a
-              href="#gallery"
+              href="/galeria"
               className="inline-flex items-center text-primary font-medium hover:text-golden-dark transition-colors"
             >
               Ver nossa galeria
