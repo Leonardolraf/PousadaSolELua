@@ -123,7 +123,7 @@ const Testimonials = () => {
     if (!user) {
       navigate('/auth');
     } else {
-      navigate('/profile');
+      navigate('/profile?scrollTo=bookings');
     }
   };
 

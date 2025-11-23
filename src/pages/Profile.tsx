@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -30,6 +30,8 @@ interface UserRole {
 
 const Profile = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const bookingsRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [userRole, setUserRole] = useState<string>("user");
@@ -44,6 +46,14 @@ const Profile = () => {
   useEffect(() => {
     checkUser();
   }, []);
+
+  useEffect(() => {
+    if (!loading && searchParams.get('scrollTo') === 'bookings') {
+      setTimeout(() => {
+        bookingsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 500);
+    }
+  }, [loading, searchParams]);
 
   const checkUser = async () => {
     const { data: { user } } = await supabase.auth.getUser();
@@ -291,7 +301,9 @@ const Profile = () => {
               </Card>
 
               {/* User Bookings */}
-              <UserBookings />
+              <div ref={bookingsRef}>
+                <UserBookings />
+              </div>
 
               {/* Quick Actions */}
               <Card>

@@ -3,10 +3,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, Users, DollarSign, X } from "lucide-react";
-import { format } from "date-fns";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Calendar, Users, DollarSign, X, Star } from "lucide-react";
+import { format, isPast } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { toast } from "sonner";
+import { ReviewForm } from "@/components/ReviewForm";
 
 interface Booking {
   id: string;
@@ -17,11 +19,14 @@ interface Booking {
   status: string;
   room_title: string;
   created_at: string;
+  hasReview?: boolean;
 }
 
 export const UserBookings = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
+  const [reviewDialogOpen, setReviewDialogOpen] = useState(false);
+  const [selectedBookingId, setSelectedBookingId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchBookings();
@@ -43,7 +48,21 @@ export const UserBookings = () => {
       return;
     }
 
-    setBookings(data || []);
+    // Check which bookings have reviews
+    const bookingIds = data?.map(b => b.id) || [];
+    const { data: reviewsData } = await supabase
+      .from("reviews")
+      .select("booking_id")
+      .in("booking_id", bookingIds);
+
+    const reviewedBookingIds = new Set(reviewsData?.map(r => r.booking_id) || []);
+    
+    const bookingsWithReviewStatus = data?.map(booking => ({
+      ...booking,
+      hasReview: reviewedBookingIds.has(booking.id)
+    })) || [];
+
+    setBookings(bookingsWithReviewStatus);
     setLoading(false);
   };
 
@@ -61,6 +80,26 @@ export const UserBookings = () => {
 
     toast.success("Reserva cancelada com sucesso");
     fetchBookings();
+  };
+
+  const canReview = (booking: Booking) => {
+    return (
+      booking.status === "confirmed" &&
+      isPast(new Date(booking.check_out)) &&
+      !booking.hasReview
+    );
+  };
+
+  const handleOpenReviewDialog = (bookingId: string) => {
+    setSelectedBookingId(bookingId);
+    setReviewDialogOpen(true);
+  };
+
+  const handleReviewSuccess = () => {
+    setReviewDialogOpen(false);
+    setSelectedBookingId(null);
+    fetchBookings();
+    toast.success("Avaliação enviada com sucesso!");
   };
 
   const getStatusBadge = (status: string) => {
@@ -124,21 +163,56 @@ export const UserBookings = () => {
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
                 <span>R$ {booking.total_price.toFixed(2)}</span>
               </div>
-              {booking.status === "pending" && (
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  onClick={() => handleCancelBooking(booking.id)}
-                  className="mt-2"
-                >
-                  <X className="h-4 w-4 mr-2" />
-                  Cancelar Reserva
-                </Button>
-              )}
+              
+              <div className="flex gap-2 mt-2">
+                {booking.status === "pending" && (
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => handleCancelBooking(booking.id)}
+                  >
+                    <X className="h-4 w-4 mr-2" />
+                    Cancelar Reserva
+                  </Button>
+                )}
+                
+                {canReview(booking) && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleOpenReviewDialog(booking.id)}
+                  >
+                    <Star className="h-4 w-4 mr-2" />
+                    Avaliar Estadia
+                  </Button>
+                )}
+                
+                {booking.hasReview && (
+                  <Badge variant="outline" className="ml-auto">
+                    <Star className="h-3 w-3 mr-1 fill-yellow-400 text-yellow-400" />
+                    Avaliada
+                  </Badge>
+                )}
+              </div>
             </CardContent>
           </Card>
         ))}
       </CardContent>
+
+      <Dialog open={reviewDialogOpen} onOpenChange={setReviewDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Avaliar sua Estadia</DialogTitle>
+          </DialogHeader>
+          {selectedBookingId && (
+            <ReviewForm
+              bookingId={selectedBookingId}
+              onSuccess={handleReviewSuccess}
+              onCancel={() => setReviewDialogOpen(false)}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 };
