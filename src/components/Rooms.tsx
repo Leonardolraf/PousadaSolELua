@@ -2,11 +2,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BookingCalendar } from "@/components/BookingCalendar";
+import quarto1 from "@/assets/gallery/quarto-1.avif";
+import quarto2 from "@/assets/gallery/quarto-2.avif";
+import quarto3 from "@/assets/gallery/quarto-3.avif";
 
 const Rooms = () => {
   const rooms = [
     {
-      image: "src\\assets\\gallery\\quarto-1.avif",
+      image: quarto1,
       badge: "MAIS POPULAR",
       title: "Quarto Standard",
       description:
@@ -17,7 +20,7 @@ const Rooms = () => {
       price: "R$ 280",
     },
     {
-      image: "src\\assets\\gallery\\quarto-2.avif",
+      image: quarto2,
       title: "Suíte Premium",
       description:
         "Amplo espaço com varanda privativa, vista panorâmica para o mar e banheira de hidromassagem.",
@@ -26,7 +29,7 @@ const Rooms = () => {
       price: "R$ 420",
     },
     {
-      image: "src\\assets\\gallery\\quarto-3.avif",
+      image: "quarto3",
       title: "Chalé Familiar",
       description:
         "Espaçoso chalé com dois quartos, ideal para famílias ou grupos pequenos, com cozinha equipada.",
