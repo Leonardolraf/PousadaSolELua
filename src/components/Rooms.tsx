@@ -29,7 +29,7 @@ const Rooms = () => {
       price: "R$ 420",
     },
     {
-      image: "quarto3",
+      image: quarto3,
       title: "Chalé Familiar",
       description:
         "Espaçoso chalé com dois quartos, ideal para famílias ou grupos pequenos, com cozinha equipada.",
