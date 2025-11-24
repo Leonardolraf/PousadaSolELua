@@ -44,7 +44,6 @@ const Hero = () => {
             size="lg"
             className="bg-primary hover:bg-golden-dark text-primary-foreground rounded-full transform hover:scale-105 transition-all shadow-lg"
           >
-            {/* 🔁 Agora usando Link, não <a href> */}
             <Link to="/acomodacoes">
               Nossas Acomodações
             </Link>
@@ -56,7 +55,6 @@ const Hero = () => {
             size="lg"
             className="bg-transparent hover:bg-background hover:text-foreground text-white border-2 border-white rounded-full transform hover:scale-105 transition-all"
           >
-            {/* 🔁 Também Link aqui */}
             <Link to="/reservas">
               Faça sua Reserva
             </Link>
