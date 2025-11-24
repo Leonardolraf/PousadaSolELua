@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import aboutImage from "@/assets/about-pousada.jpg";
 
 const About = () => {
@@ -70,15 +71,20 @@ const About = () => {
                     <i className={`fas ${feature.icon} text-primary text-xl`}></i>
                   </div>
                   <div>
-                    <h4 className="font-bold text-foreground mb-1">{feature.title}</h4>
-                    <p className="text-muted-foreground text-sm">{feature.description}</p>
+                    <h4 className="font-bold text-foreground mb-1">
+                      {feature.title}
+                    </h4>
+                    <p className="text-muted-foreground text-sm">
+                      {feature.description}
+                    </p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <a
-              href="/galeria"
+            {/* 🔁 Aqui trocamos <a href="/galeria"> por <Link to="/galeria"> */}
+            <Link
+              to="/galeria"
               className="inline-flex items-center text-primary font-medium hover:text-golden-dark transition-colors"
             >
               Ver nossa galeria
@@ -94,7 +100,7 @@ const About = () => {
                   clipRule="evenodd"
                 />
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
