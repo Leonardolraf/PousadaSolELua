@@ -1,8 +1,13 @@
+import React from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/hero-pousada.jpg";
 
 const Hero = () => {
-  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+  const handleScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    targetId: string,
+  ) => {
     e.preventDefault();
     const element = document.getElementById(targetId);
     if (element) {
@@ -22,36 +27,39 @@ const Hero = () => {
       id="home"
       className="relative flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage:
-          `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${heroImage}')`,
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${heroImage}')`,
       }}
     >
-      <div className="text-center px-4 animate-fadeIn text-white">
+      <div className="text-center px-4 text-white">
         <h1 className="title-font text-5xl md:text-7xl font-bold mb-6 drop-shadow-lg">
-          Pousada Sol & Lua
+          Pousada Sol &amp; Lua
         </h1>
         <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto drop-shadow-md">
           Um refúgio encantador entre o sol e o mar em Ilhéus, Bahia
         </p>
+
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <Button
             asChild
             size="lg"
-            className="bg-primary hover:bg-golden-dark text-primary-foreground font-bold rounded-full transform hover:scale-105 transition-all shadow-golden"
+            className="bg-primary hover:bg-golden-dark text-primary-foreground rounded-full transform hover:scale-105 transition-all shadow-lg"
           >
-            <a href="/acomodacoes">
+            {/* 🔁 Agora usando Link, não <a href> */}
+            <Link to="/acomodacoes">
               Nossas Acomodações
-            </a>
+            </Link>
           </Button>
+
           <Button
             asChild
             variant="outline"
             size="lg"
             className="bg-transparent hover:bg-background hover:text-foreground text-white border-2 border-white rounded-full transform hover:scale-105 transition-all"
           >
-            <a href="/reservas">
+            {/* 🔁 Também Link aqui */}
+            <Link to="/reservas">
               Faça sua Reserva
-            </a>
+            </Link>
           </Button>
         </div>
       </div>
@@ -60,7 +68,7 @@ const Hero = () => {
         href="#about"
         onClick={(e) => handleScroll(e, "about")}
         className="absolute bottom-10 left-0 right-0 flex justify-center text-white animate-bounce cursor-pointer"
-        aria-label="Scroll to about section"
+        aria-label="Ir para a seção Sobre"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
