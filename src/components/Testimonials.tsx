@@ -14,10 +14,69 @@ interface Review {
   comment: string;
   created_at: string;
   bookings: {
-    guest_name: string;
-    room_title: string;
-  };
+    guest_name: string | null;
+    room_title: string | null;
+  } | null;
 }
+
+// Avaliações mockadas de exemplo
+const mockReviews: Review[] = [
+  {
+    id: "mock-1",
+    rating: 5,
+    comment:
+      "Lugar perfeito para relaxar! A vista para o mar é incrível e o atendimento foi excepcional. Voltaremos com certeza!",
+    bookings: {
+      guest_name: "Maria Silva",
+      room_title: "Suíte Premium",
+    },
+    created_at: "2024-01-15T10:00:00",
+  },
+  {
+    id: "mock-2",
+    rating: 5,
+    comment:
+      "Experiência maravilhosa! O café da manhã estava delicioso e os quartos muito limpos e confortáveis.",
+    bookings: {
+      guest_name: "João Pereira",
+      room_title: "Quarto Standard",
+    },
+    created_at: "2024-01-28T14:30:00",
+  },
+  {
+    id: "mock-3",
+    rating: 4,
+    comment:
+      "Ótima localização e ambiente acolhedor. Perfeito para famílias!",
+    bookings: {
+      guest_name: "Ana Costa",
+      room_title: "Chalé Familiar",
+    },
+    created_at: "2024-02-05T16:45:00",
+  },
+  {
+    id: "mock-4",
+    rating: 5,
+    comment:
+      "Superou todas as expectativas! A pousada é linda e a equipe muito atenciosa.",
+    bookings: {
+      guest_name: "Pedro Oliveira",
+      room_title: "Suíte Premium",
+    },
+    created_at: "2024-02-10T09:20:00",
+  },
+  {
+    id: "mock-5",
+    rating: 5,
+    comment:
+      "Lugar tranquilo e romântico, ideal para casais. Adoramos cada momento!",
+    bookings: {
+      guest_name: "Carla Mendes",
+      room_title: "Quarto Standard",
+    },
+    created_at: "2024-02-18T11:15:00",
+  },
+];
 
 const Testimonials = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -26,79 +85,14 @@ const Testimonials = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // Mock reviews
-  const mockReviews = [
-    {
-      id: 'mock-1',
-      rating: 5,
-      comment: 'Lugar perfeito para relaxar! A vista para o mar é deslumbrante e o atendimento foi excepcional. Voltaremos com certeza!',
-      bookings: {
-        guest_name: 'Maria Silva',
-        room_title: 'Suíte Premium'
-      },
-      created_at: '2024-01-15T10:00:00'
-    },
-    {
-      id: 'mock-2',
-      rating: 5,
-      comment: 'Experiência maravilhosa! O café da manhã estava delicioso e os quartos muito limpos e confortáveis.',
-      bookings: {
-        guest_name: 'João Santos',
-        room_title: 'Quarto Standard'
-      },
-      created_at: '2024-01-20T14:30:00'
-    },
-    {
-      id: 'mock-3',
-      rating: 4,
-      comment: 'Ótima localização e ambiente acolhedor. Perfeito para famílias!',
-      bookings: {
-        guest_name: 'Ana Costa',
-        room_title: 'Chalé Familiar'
-      },
-      created_at: '2024-02-05T16:45:00'
-    },
-    {
-      id: 'mock-4',
-      rating: 5,
-      comment: 'Superou todas as expectativas! A pousada é linda e a equipe muito atenciosa.',
-      bookings: {
-        guest_name: 'Pedro Oliveira',
-        room_title: 'Suíte Premium'
-      },
-      created_at: '2024-02-10T09:20:00'
-    },
-    {
-      id: 'mock-5',
-      rating: 5,
-      comment: 'Lugar tranquilo e romântico, ideal para casais. Adoramos cada momento!',
-      bookings: {
-        guest_name: 'Carla Mendes',
-        room_title: 'Quarto Standard'
-      },
-      created_at: '2024-02-18T11:15:00'
-    },
-    {
-      id: 'mock-6',
-      rating: 4,
-      comment: 'Muito bem localizado e com excelente estrutura. Recomendo!',
-      bookings: {
-        guest_name: 'Roberto Almeida',
-        room_title: 'Chalé Familiar'
-      },
-      created_at: '2024-02-25T15:00:00'
-    }
-  ];
-
-  useEffect(() => {
-    fetchReviews();
-  }, []);
-
   const fetchReviews = async () => {
     try {
+      setLoading(true);
+
       const { data, error } = await supabase
-        .from('reviews')
-        .select(`
+        .from("reviews")
+        .select(
+          `
           id,
           rating,
           comment,
@@ -107,23 +101,37 @@ const Testimonials = () => {
             guest_name,
             room_title
           )
-        `)
-        .order('created_at', { ascending: false });
+        `
+        )
+        .order("created_at", { ascending: false });
 
-      if (error) throw error;
-      setReviews(data || []);
-    } catch (error) {
-      console.error('Error fetching reviews:', error);
+      if (error) {
+        console.error("Error fetching reviews:", error);
+        return;
+      }
+
+      // Filtra qualquer review sem relação com bookings
+      const safeData: Review[] = (data ?? []).filter(
+        (review: any) => review && review.bookings
+      ) as Review[];
+
+      setReviews(safeData);
+    } catch (err) {
+      console.error("Unexpected error fetching reviews:", err);
     } finally {
       setLoading(false);
     }
   };
 
+  useEffect(() => {
+    fetchReviews();
+  }, []);
+
   const handleReviewClick = () => {
     if (!user) {
-      navigate('/auth');
+      navigate("/auth");
     } else {
-      navigate('/profile?scrollTo=bookings');
+      navigate("/profile?scrollTo=bookings");
     }
   };
 
@@ -154,29 +162,28 @@ const Testimonials = () => {
                   <ReviewCard
                     rating={review.rating}
                     comment={review.comment}
-                    guestName={review.bookings.guest_name}
-                    roomTitle={review.bookings.room_title}
+                    guestName={review.bookings?.guest_name ?? "Hóspede"}
+                    roomTitle={
+                      review.bookings?.room_title ?? "Acomodação reservada"
+                    }
                     createdAt={review.created_at}
                   />
                 </div>
               ))}
             </div>
-            
-            <div className="flex flex-col items-center gap-4 mt-12">
-              {allReviews.length > 6 && (
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={() => setShowAll(!showAll)}
-                  className="bg-background text-foreground hover:bg-background/90"
-                >
-                  {showAll ? 'Ver Menos' : 'Ver Mais Avaliações'}
-                </Button>
-              )}
-              
+
+            <div className="mt-12 flex flex-col md:flex-row items-center justify-between gap-4">
               <Button
-                size="lg"
+                variant="outline"
+                onClick={() => setShowAll((prev) => !prev)}
+                className="bg-background text-foreground hover:bg-background/90"
+              >
+                {showAll ? "Ver menos avaliações" : "Ver todas as avaliações"}
+              </Button>
+
+              <Button
                 onClick={handleReviewClick}
+                variant="outline"
                 className="bg-background text-foreground hover:bg-background/90 gap-2"
               >
                 <PenSquare className="w-5 h-5" />
