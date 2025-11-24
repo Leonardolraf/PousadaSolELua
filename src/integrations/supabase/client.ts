@@ -10,12 +10,12 @@ function getSafeStorage() {
     if (typeof window === "undefined" || typeof window.localStorage === "undefined") {
       return undefined;
     }
-    // Testa se dá pra escrever (Safari privado é chato nisso)
     const key = "__supabase_test__";
     window.localStorage.setItem(key, "ok");
     window.localStorage.removeItem(key);
     return window.localStorage;
   } catch {
+    // Se der erro, não usa storage (sem persistir sessão)
     return undefined;
   }
 }
@@ -25,7 +25,7 @@ export const supabase = createClient<Database>(
   SUPABASE_PUBLISHABLE_KEY,
   {
     auth: {
-      storage: getSafeStorage(), // pode ser undefined em caso extremo
+      storage: getSafeStorage(),
       persistSession: true,
       autoRefreshToken: true,
     },
