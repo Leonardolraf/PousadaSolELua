@@ -59,7 +59,7 @@ const rooms: Room[] = [
     size: "40m²",
     description: "Amplo espaço com varanda privativa, vista panorâmica para o mar e banheira de hidromassagem.",
     amenities: ["Wi-Fi", "Ar-condicionado", "TV", "Frigobar", "Varanda", "Hidromassagem"],
-    image: "@/assets/gallery/quarto-4.jpg",
+    image: "@\\assets\\gallery\\quarto-4.jpg",
   },
   {
     id: "chale",
