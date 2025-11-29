@@ -59,7 +59,7 @@ const rooms: Room[] = [
     size: "40m²",
     description: "Amplo espaço com varanda privativa, vista panorâmica para o mar e banheira de hidromassagem.",
     amenities: ["Wi-Fi", "Ar-condicionado", "TV", "Frigobar", "Varanda", "Hidromassagem"],
-    image: "src/assets/gallery/quarto-4.jpg",
+    image: "@/assets/gallery/quarto-4.jpg",
   },
   {
     id: "chale",
@@ -215,7 +215,7 @@ const Reservas = () => {
       <div className="min-h-screen bg-muted/30">
         <Navigation />
         <Breadcrumbs />
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Header */}
           <div className="text-center mb-12">
