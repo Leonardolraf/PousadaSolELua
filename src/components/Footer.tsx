@@ -60,22 +60,13 @@ const Footer = () => {
           <div className="flex items-center gap-4">
             <span className="text-gray-400 text-sm mr-2">Siga-nos:</span>
             <a
-              href="https://www.instagram.com/pous.sol_e_lua?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              href="https://www.instagram.com/soleluapousada/"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-gray-800 text-primary hover:bg-primary hover:text-white w-10 h-10 rounded-full flex items-center justify-center transition-all"
               aria-label="Instagram"
             >
               <i className="fab fa-instagram text-xl"></i>
-            </a>
-            <a
-              href="https://www.facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-gray-800 text-primary hover:bg-primary hover:text-white w-10 h-10 rounded-full flex items-center justify-center transition-all"
-              aria-label="Facebook"
-            >
-              <i className="fab fa-facebook-f text-xl"></i>
             </a>
             <a
               href="https://api.whatsapp.com/send/?phone=5561995592120&text&type=phone_number&app_absent=0"

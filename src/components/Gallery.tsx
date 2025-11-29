@@ -1,9 +1,9 @@
 import fachada from "@/assets/gallery/fachada.jpg";
-import palmeiras from "@/assets/gallery/palmeiras.jpg";
+import palmeiras from "@/assets/gallery/quarto-4.jpg";
 import quarto1 from "@/assets/gallery/quarto-1.avif";
 import quarto2 from "@/assets/gallery/quarto-2.avif";
 import quarto3 from "@/assets/gallery/quarto-3.avif";
-import banheiro from "@/assets/gallery/banheiro.jpg";
+import banheiro from "@/assets/gallery/cafe-da-manha.jpg";
 
 const Gallery = () => {
   const images = [

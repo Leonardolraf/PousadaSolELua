@@ -81,8 +81,6 @@ const About = () => {
                 </div>
               ))}
             </div>
-
-            {/* 🔁 Aqui trocamos <a href="/galeria"> por <Link to="/galeria"> */}
             <Link
               to="/galeria"
               className="inline-flex items-center text-primary font-medium hover:text-golden-dark transition-colors"
