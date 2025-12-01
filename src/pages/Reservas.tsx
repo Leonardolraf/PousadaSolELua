@@ -19,6 +19,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import fachada from "@/assets/gallery/fachada.jpg";
+import palmeiras from "@/assets/gallery/quarto-4.jpg";
+import quarto1 from "@/assets/gallery/quarto-1.avif";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format, differenceInDays } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -49,7 +52,7 @@ const rooms: Room[] = [
     size: "25m²",
     description: "Ideal para casais, com vista parcial para o mar e todas as comodidades necessárias.",
     amenities: ["Wi-Fi", "Ar-condicionado", "TV", "Frigobar", "Banheiro privativo"],
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq3KItMz9TTWeDb-HsFxSh2_su5inT7X6Y4A&s",
+    image: quarto1,
   },
   {
     id: "premium",
@@ -59,7 +62,7 @@ const rooms: Room[] = [
     size: "40m²",
     description: "Amplo espaço com varanda privativa, vista panorâmica para o mar e banheira de hidromassagem.",
     amenities: ["Wi-Fi", "Ar-condicionado", "TV", "Frigobar", "Varanda", "Hidromassagem"],
-    image: "@\\assets\\gallery\\quarto-4.jpg",
+    image: palmeiras,
   },
   {
     id: "chale",
@@ -69,7 +72,7 @@ const rooms: Room[] = [
     size: "60m²",
     description: "Espaçoso chalé com dois quartos, ideal para famílias ou grupos pequenos.",
     amenities: ["Wi-Fi", "Ar-condicionado", "TV", "Cozinha equipada", "Sala de estar", "2 Quartos"],
-    image: "https://a0.muscache.com/im/pictures/hosting/Hosting-40566347/original/b181d2b1-f6bd-45cb-b3f8-770e8eff2de7.jpeg",
+    image: fachada,
   },
 ];
 
