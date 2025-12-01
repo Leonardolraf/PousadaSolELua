@@ -43,21 +43,47 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      const whatsappNumber = "5561995592120"; // número que você passou
+
+      // Monta a mensagem
+      let text = "*Contato pelo site - Pousada Sol & Lua*\n\n";
+      text += `*Nome:* ${name}\n`;
+      text += `*E-mail:* ${email}\n`;
+      if (phone) {
+        text += `*Telefone:* ${phone}\n`;
+      }
+      text += `*Assunto:* ${subject}\n\n`;
+      text += `*Mensagem:*\n${message}`;
+
+      const encodedText = encodeURIComponent(text);
+
+      // URL do WhatsApp no formato que você usa
+      const whatsappUrl = `https://api.whatsapp.com/send/?phone=${whatsappNumber}&text=${encodedText}&type=phone_number&app_absent=0`;
+
       toast({
-        title: "Mensagem enviada!",
-        description: "Recebemos sua mensagem e entraremos em contato em breve.",
+        title: "Redirecionando para o WhatsApp",
+        description: "Revise a mensagem e envie para concluir o contato.",
       });
-      
-      // Reset form
+
+      // Abre o WhatsApp
+      window.open(whatsappUrl, "_blank");
+
+      // Limpa o formulário
       setName("");
       setEmail("");
       setPhone("");
       setSubject("");
       setMessage("");
+    } catch (error: any) {
+      toast({
+        title: "Erro ao enviar",
+        description: error?.message || "Não foi possível abrir o WhatsApp.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
