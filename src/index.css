@@ -2,15 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Hide Lovable badge */
-#lovable-badge {
-  display: none !important;
-}
-
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -42,7 +33,7 @@ All colors MUST be HSL.
     --ring: 36 100% 50%;
 
     --radius: 0.75rem;
-    
+
     /* Custom colors for Pousada Sol & Lua */
     --golden: 45 100% 51%;
     --golden-dark: 36 100% 40%;
@@ -50,11 +41,11 @@ All colors MUST be HSL.
     --ocean: 199 89% 48%;
     --sand: 39 77% 83%;
     --sunset: 14 91% 63%;
-    
+
     /* Shadows and effects */
     --shadow-golden: 0 10px 30px -10px hsl(45 100% 51% / 0.3);
     --shadow-soft: 0 4px 20px -5px hsl(220 13% 18% / 0.1);
-    
+
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -125,11 +116,16 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
     font-family: 'Poppins', sans-serif;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: 'Playfair Display', serif;
   }
-  
+
   html {
     scroll-behavior: smooth;
   }
@@ -139,20 +135,27 @@ All colors MUST be HSL.
   .title-font {
     font-family: 'Playfair Display', serif;
   }
-  
+
   .parallax-fixed {
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
   }
-  
+
   .animate-fadeIn {
     animation: fadeIn 1s ease-in-out;
   }
-  
+
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
